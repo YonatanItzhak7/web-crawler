@@ -4,16 +4,22 @@ import cheerio from "cheerio";
 import fetch from "node-fetch";
 
 const crawlToPage = async (pageUrl, depth, maxDepth) => {
-    console.log(pageUrl)
+  console.log(pageUrl);
   const { host, protocol } = urlParser.parse(pageUrl);
   const page = await fetch(pageUrl);
-  const html = page.text();
+  const html = await page.text();
+  console.log(html)
   const $ = cheerio.load(html);
   const links = $("a")
     .map((i, link) => link.attribs.href)
     .get();
-    console.log(links);
+  console.log(links);
 
+  const images = $("img")
+    .map((i, link) => link.attribs.src)
+    .get();
+    console.log(images)
+    let result = {results:[]}
 };
 // crawlToPage();
 
